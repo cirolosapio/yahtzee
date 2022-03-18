@@ -1,6 +1,3 @@
-<script setup lang="ts">
-import { isDark, toggleDark } from '~/composables'
-</script>
 
 <template>
   <nav text-xl mt-6 inline-flex gap-2>
@@ -12,10 +9,14 @@ import { isDark, toggleDark } from '~/composables'
     <a
       class="icon-btn"
       i-carbon-logo-github
-      rel="noreferrer"
-      href="https://github.com/antfu/vitesse-lite"
+      rel="noopener noreferrer"
+      href="https://github.com/heartbeatLV/yahtzee"
       target="_blank"
       title="GitHub"
     />
   </nav>
 </template>
+
+<script setup lang="ts">
+import { isDark, toggleDark } from '~/composables'
+</script>

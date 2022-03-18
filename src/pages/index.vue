@@ -1,23 +1,13 @@
-<script setup lang="ts">
-const name = $ref('')
-
-const router = useRouter()
-const go = () => {
-  if (name)
-    router.push(`/hi/${encodeURIComponent(name)}`)
-}
-</script>
-
 <template>
   <div>
     <div i-carbon-campsite text-4xl inline-block />
     <p>
-      <a rel="noreferrer" href="https://github.com/antfu/vitesse-lite" target="_blank">
-        Vitesse Lite
+      <a rel="noopener noreferrer" href="https://github.com/heartbeatLV/yahtzee" target="_blank">
+        Yahtzee
       </a>
     </p>
     <p>
-      <em text-sm op75>Opinionated Vite Starter Template</em>
+      <em text-sm op75>Vite + UnoCss + Vue3</em>
     </p>
 
     <div py-4 />
@@ -34,17 +24,27 @@ const go = () => {
       bg="transparent"
       border="~ rounded gray-200 dark:gray-700"
       outline="none active:none"
-      @keydown.enter="go"
-    >
+      @keydown.enter="go()"
+    />
 
     <div>
       <button
         class="m-3 text-sm btn"
         :disabled="!name"
-        @click="go"
+        @click="go()"
       >
         Go
       </button>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const name = $ref('')
+
+const router = useRouter()
+const go = () => {
+  if (name)
+    router.push(`/hi/${encodeURIComponent(name)}`)
+}
+</script>
