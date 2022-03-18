@@ -4,7 +4,27 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AzureIcon: typeof import('./src/components/icons/providers/AzureIcon.vue')['default']
+    CenteredIcon: typeof import('./src/components/icons/CenteredIcon.vue')['default']
+    DiscordIcon: typeof import('./src/components/icons/providers/DiscordIcon.vue')['default']
+    EmailIcon: typeof import('./src/components/icons/providers/EmailIcon.vue')['default']
+    FacebookIcon: typeof import('./src/components/icons/providers/FacebookIcon.vue')['default']
+    GithubIcon: typeof import('./src/components/icons/providers/GithubIcon.vue')['default']
+    GoogleIcon: typeof import('./src/components/icons/providers/GoogleIcon.vue')['default']
+    NButton: typeof import('naive-ui')['NButton']
+    NConfigProvider: typeof import('naive-ui')['NConfigProvider']
+    NLayout: typeof import('naive-ui')['NLayout']
+    NLayoutFooter: typeof import('naive-ui')['NLayoutFooter']
+    NMessageProvider: typeof import('naive-ui')['NMessageProvider']
+    NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
+    NSpin: typeof import('naive-ui')['NSpin']
+    NTooltip: typeof import('naive-ui')['NTooltip']
+    ProviderIcon: typeof import('./src/components/icons/ProviderIcon.vue')['default']
+    PwaNotification: typeof import('./src/components/PwaNotification.vue')['default']
+    SpotifyIcon: typeof import('./src/components/icons/providers/SpotifyIcon.vue')['default']
     TheFooter: typeof import('./src/components/TheFooter.vue')['default']
+    TwitchIcon: typeof import('./src/components/icons/providers/TwitchIcon.vue')['default']
+    TwitterIcon: typeof import('./src/components/icons/providers/TwitterIcon.vue')['default']
   }
 }
 
