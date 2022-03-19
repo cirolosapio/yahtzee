@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import type { User } from '@supabase/supabase-js'
 
 export const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
@@ -6,9 +7,16 @@ export const supabase = createClient(
 )
 
 export function useAuth () {
-  const user = supabase.auth.user()
+  const user = ref<User|null>(supabase.auth.user())
+
+  const loggedIn = computed(() => !!user.value)
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    user.value = session?.user ?? null
+  })
+
   return {
-    loggedIn: !!user,
+    loggedIn,
     user,
   }
 }

@@ -17,10 +17,10 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const { loggedIn } = useAuth()
 
-  if (loggedIn && to.name === 'login') next({ name: 'index' })
-  else if (loggedIn && to.name !== 'login') next()
-  else if (!loggedIn && to.name !== 'login') next({ name: 'login' })
-  // else if(!loggedIn && to.name === 'login') next()
+  if (loggedIn.value && to.name === 'login') next({ name: 'index' })
+  else if (loggedIn.value && to.name !== 'login') next()
+  else if (!loggedIn.value && to.name !== 'login') next({ name: 'login' })
+  // else if(!loggedIn.value && to.name === 'login') next()
   else next()
 })
 

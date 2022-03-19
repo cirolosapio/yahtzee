@@ -41,7 +41,8 @@
     "extends": "@crewbe/eslint-config-vue-ts",
     "rules": {
       "vue/html-button-has-type": "off",
-      "vue/multi-word-component-names": "off"
+      "vue/multi-word-component-names": "off",
+      "unicorn/no-null": "off"
     }
   }
 }
