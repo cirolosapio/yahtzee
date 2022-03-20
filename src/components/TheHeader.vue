@@ -1,7 +1,7 @@
 <template>
   <n-layout-header bordered>
     <div class="mx4 my2" flex items-center :class="loggedIn ? 'justify-between' : 'justify-center'">
-      <n-gradient-text text-2xl>
+      <n-gradient-text text-2xl @click="showMessage()">
         SI<template v-for="n in u" :key="n">U</template>M
       </n-gradient-text>
 
@@ -30,6 +30,10 @@ const message = useMessage()
 const u = ref(2)
 
 onMounted(() => {
+  showMessage()
+})
+
+function showMessage () {
   if (import.meta.env.PROD) {
     dialog.info({
       closable: false,
@@ -49,7 +53,7 @@ onMounted(() => {
       }),
     })
   }
-})
+}
 
 async function logout () {
   try {

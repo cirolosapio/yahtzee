@@ -30,5 +30,16 @@
 
 <script setup lang="ts">
 import { darkTheme, dateItIT, itIT } from 'naive-ui'
-import { isDark, isLoading } from '~/composables'
+import { isDark, isLoading, supabase, user } from '~/composables'
+
+const visibility = useDocumentVisibility()
+
+watchEffect(async () => {
+  if (user.value?.user_id) {
+    await supabase
+      .from('profiles')
+      .update({ online: visibility.value === 'visible' })
+      .eq('user_id', user.value.user_id)
+  }
+})
 </script>
