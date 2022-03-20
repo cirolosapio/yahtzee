@@ -29,10 +29,6 @@ const message = useMessage()
 
 const u = ref(2)
 
-onMounted(() => {
-  showMessage()
-})
-
 function showMessage () {
   if (import.meta.env.PROD) {
     dialog.info({
