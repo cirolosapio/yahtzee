@@ -35,14 +35,12 @@ function showMessage () {
       closable: false,
       title: 'Quante U?',
       maskClosable: false,
-      onMaskClick: () => {
-        message.warning('Rispun')
-      },
+      onMaskClick: () => { message.warning('Rispun') },
       positiveText: 'Conferma',
       content: () => h(NInputNumber, {
         value: u.value,
         min: 2,
-        max: 10,
+        max: 100,
         onUpdateValue: val => {
           if (val) u.value = val
         },
