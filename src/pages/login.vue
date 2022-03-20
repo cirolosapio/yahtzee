@@ -10,9 +10,14 @@
 
 <script setup lang="ts">
 import type { Provider } from '@supabase/supabase-js'
-import { supabase, toggleLoading } from '~/composables'
+import { loggedIn, supabase, toggleLoading } from '~/composables'
 
 const message = useMessage()
+const $router = useRouter()
+
+onMounted(() => {
+  loggedIn.value && $router.push('/')
+})
 
 const providers: Provider[] = ['github', 'google', 'twitter', 'discord', 'twitch', 'spotify'] // facebook, azure
 
