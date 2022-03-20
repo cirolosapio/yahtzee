@@ -6,7 +6,11 @@
 
     <n-spin :show="isLoading">
       <div flex flex-col h-screen>
-        <the-header />
+        <n-message-provider>
+          <n-dialog-provider>
+            <the-header />
+          </n-dialog-provider>
+        </n-message-provider>
 
         <n-layout flex-grow>
           <n-layout embedded>

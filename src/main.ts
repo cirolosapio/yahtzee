@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import routes from 'virtual:generated-pages'
 import App from './App.vue'
-import { useAuth } from '~/composables'
+import { supabase } from '~/composables'
 
 import '@unocss/reset/tailwind.css'
 import './styles/main.css'
@@ -14,13 +14,13 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach(async (to, from, next) => {
-  const { loggedIn } = useAuth()
+router.beforeEach(async (to, _, next) => {
+  const loggedIn = !!supabase.auth.user()
 
-  if (loggedIn.value && to.name === 'login') next({ name: 'index' })
-  else if (loggedIn.value && to.name !== 'login') next()
-  else if (!loggedIn.value && to.name !== 'login') next({ name: 'login' })
-  // else if(!loggedIn.value && to.name === 'login') next()
+  if (loggedIn && to.name === 'login') next({ name: 'index' })
+  else if (loggedIn && to.name !== 'login') next()
+  else if (!loggedIn && to.name !== 'login') next({ name: 'login' })
+  // else if(!loggedIn && to.name === 'login') next()
   else next()
 })
 

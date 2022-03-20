@@ -1,12 +1,12 @@
 
 <template>
-  <n-layout-footer bordered text="center" py2>
-    <nav text-xl inline-flex gap-2>
-      <n-button v-if="loggedIn" text circle @click="logout()">
-        <centered-icon>
-          <div i-carbon-logout />
-        </centered-icon>
-      </n-button>
+  <n-layout-footer bordered p2>
+    <nav flex items-center :class="loggedIn ? 'justify-between' : 'justify-center'">
+      <div v-if="loggedIn" flex items-center>
+        <n-avatar round :src="user?.avatar_url" />
+        <div mx2>{{ user?.full_name }}</div>
+        <div v-if="isOnline" i-ph-circle-fill text-green text-xs />
+      </div>
 
       <n-tooltip>
         <template #trigger>
@@ -20,22 +20,18 @@
         {{ isDark ? 'Tema Chiaro' : 'Tema Scuro' }}
       </n-tooltip>
 
-      <a class="icon-btn" i-carbon-logo-github rel="noopener noreferrer" href="https://github.com/heartbeatLV/yahtzee" target="_blank" title="GitHub" />
+      <!--
+        <n-button href="https://github.com/heartbeatLV/yahtzee" text circle size="large" rel="noopener noreferrer" target="_blank">
+        <template #icon>
+        <centered-icon i-carbon-logo-github />
+        </template>
+        </n-button>
+      -->
     </nav>
   </n-layout-footer>
 </template>
 
 <script setup lang="ts">
-import { isDark, supabase, toggleDark, toggleLoading, useAuth } from '~/composables'
-
-const $router = useRouter()
-const { loggedIn } = useAuth()
-
-async function logout () {
-  try {
-    toggleLoading()
-    await supabase.auth.signOut()
-    await $router.push('login')
-  } finally { toggleLoading() }
-}
+import { isDark, loggedIn, toggleDark, user } from '~/composables'
+const { isOnline } = useNetwork ()
 </script>

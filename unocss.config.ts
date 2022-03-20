@@ -14,7 +14,7 @@ export default defineConfig({
     presetAttributify(),
     presetIcons({
       scale: 1.2,
-      warn: true,
+      // warn: true,
     }),
     presetWebFonts({
       fonts: {

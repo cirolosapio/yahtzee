@@ -1,25 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
-import type { User } from '@supabase/supabase-js'
 
 export const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_ANON_KEY,
 )
-
-export function useAuth () {
-  const user = ref<User|null>(supabase.auth.user())
-
-  const loggedIn = computed(() => !!user.value)
-
-  supabase.auth.onAuthStateChange((event, session) => {
-    user.value = session?.user ?? null
-  })
-
-  return {
-    loggedIn,
-    user,
-  }
-}
 
 // export async function refresh<T> (table: string, columns = '*'): Promise<T[]> {
 //   const { data } = await supabase

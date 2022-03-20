@@ -32,7 +32,7 @@ export default defineConfig({
         'vue-router',
         '@vueuse/core',
         {
-          'naive-ui': ['useMessage', 'useNotification'],
+          'naive-ui': ['useMessage', 'useDialog', 'useNotification'],
         },
       ],
       dts: true,
@@ -57,8 +57,8 @@ export default defineConfig({
         // devOptions: {
         //   enabled: true,
         // },
-        name: 'Yahtzee',
-        short_name: 'Yahtzee',
+        name: 'Siuum',
+        short_name: 'Siuum',
         // theme_color: '',
         lang: 'it',
         icons: [
