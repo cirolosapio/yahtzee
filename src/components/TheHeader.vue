@@ -5,16 +5,17 @@
         SI<template v-for="n in u" :key="n">U</template>M
       </n-gradient-text>
 
-      <n-tooltip v-if="loggedIn" placement="left">
-        <template #trigger>
-          <n-button text circle size="large" @click="logout()">
-            <template #icon>
-              <centered-icon i-uiw-logout />
-            </template>
-          </n-button>
+      <div flex items-center space-x-2>
+        <template v-if="loggedIn">
+          <menu-item label="Game" icon="i-ph-game-controller-duotone" name="index" />
+          <menu-item label="Utenti" icon="i-ph-user-list-duotone" name="users" />
+          <menu-item label="Roadmap" icon="i-ph-graduation-cap-duotone" name="roadmap" />
+
+          <n-divider vertical />
+
+          <menu-item placement="left" label="Chiudi Sessione" icon="i-uiw-logout" @click="logout()" />
         </template>
-        Chiudi Sessione
-      </n-tooltip>
+      </div>
     </div>
   </n-layout-header>
 </template>

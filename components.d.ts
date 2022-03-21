@@ -11,6 +11,7 @@ declare module 'vue' {
     FacebookIcon: typeof import('./src/components/icons/providers/FacebookIcon.vue')['default']
     GithubIcon: typeof import('./src/components/icons/providers/GithubIcon.vue')['default']
     GoogleIcon: typeof import('./src/components/icons/providers/GoogleIcon.vue')['default']
+    MenuItem: typeof import('./src/components/MenuItem.vue')['default']
     NAvatar: typeof import('naive-ui')['NAvatar']
     NButton: typeof import('naive-ui')['NButton']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
