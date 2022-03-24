@@ -28,21 +28,13 @@
           <th text-2xl><centered-icon i-ph-dice-four-fill /></th>
           <td>{{ results.face(4) }}</td>
           <th text-2xl><centered-icon i-mdi-stairs text-lg /></th>
-          <td>
-            <div text-red-500>
-              {{ results.smallStairs }}
-            </div>
-          </td>
+          <td>{{ results.smallStairs }}</td>
         </tr>
         <tr>
           <th text-2xl><centered-icon i-ph-dice-five-fill /></th>
           <td>{{ results.face(5) }}</td>
           <th text-2xl><centered-icon i-mdi-stairs /></th>
-          <td>
-            <div text-red-500>
-              {{ results.bigStairs }}
-            </div>
-          </td>
+          <td>{{ results.bigStairs }}</td>
         </tr>
         <tr>
           <th text-2xl><centered-icon i-ph-dice-six-fill /></th>
