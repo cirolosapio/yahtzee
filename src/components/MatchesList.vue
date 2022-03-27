@@ -34,11 +34,6 @@
 import { userId } from '~/composables'
 import type { Match } from '~/types'
 
-defineProps<{
-  matches: Match[]
-}>()
-
-defineEmits<{
-  (e: 'destroy', match_id: number, idx: number): void
-}>()
+defineEmits<{ (e: 'destroy', match_id: number, idx: number): void }>()
+defineProps<{ matches: Match[] }>()
 </script>

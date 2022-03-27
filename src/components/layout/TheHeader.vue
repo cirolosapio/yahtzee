@@ -13,6 +13,11 @@
 
           <n-divider vertical />
 
+          <n-button text circle @click="toggle()">
+            <centered-icon v-if="isFullscreen" text-xl i-mdi-fullscreen-exit />
+            <centered-icon v-else text-xl i-mdi-fullscreen />
+          </n-button>
+
           <menu-item placement="left" label="Chiudi Sessione" icon="i-uiw-logout" @click="logout()" />
         </template>
       </div>
@@ -23,6 +28,8 @@
 <script setup lang="ts">
 import { NInputNumber } from 'naive-ui'
 import { loggedIn, supabase, toggleLoading } from '~/composables'
+
+const { toggle, isFullscreen } = useFullscreen()
 
 const $router = useRouter()
 const dialog = useDialog()

@@ -1,26 +1,25 @@
 <template>
+  <match-history v-model="settings" v-model:shots="shots" :users="users" />
+
   <div h-full flex flex-col>
-    <n-progress :border-radius="0" type="line" :percentage="percent" indicator-placement="inside" />
+    <n-progress border-radius="0" type="line" :status="percent === 100 ? 'success' : undefined" :percentage="percent" indicator-placement="inside" />
     <n-page-header m2 @back="$router.push({ name: 'index' })">
       <template #title>
         MATCH #{{ id }}
       </template>
-      <template #subtitle />
-      <!--
-        <template #extra>
-        <n-dropdown :options="options" placement="bottom-start">
-        <n-button text>
-        <centered-icon i-ph-dots-three-vertical text-2xl />
+      <!--<template #subtitle></template>-->
+
+      <template #extra>
+        <!--<n-dropdown :options="options" placement="bottom-start">-->
+        <n-button text @click="settings = !settings">
+          <centered-icon i-ph-monitor-play text-xl />
         </n-button>
-        </n-dropdown>
-        </template>
-      -->
+      </template>
     </n-page-header>
 
     <div flex-1 m2>
       <!--shots: {{ shots }}<br />-->
-      <!--_shots: {{ _shots }}<br />-->
-      <leaderboard @accept="choise => accept(choise)" />
+      <leaderboard :chosed="chosed" :shots="shots" @accept="choise => accept(choise)" />
     </div>
 
     <!--
@@ -31,7 +30,7 @@
 
     <userboard :shots="shots" :users="users" />
 
-    <keyboard v-model="result" :disable="!IAmPlaying" />
+    <keyboard :disable="!IAmPlaying || percent === 100" />
   </div>
 </template>
 
@@ -51,12 +50,14 @@ onUnmounted(async () => {
 
 const props = defineProps<{ id: string }>()
 
+const settings = ref(false)
 // const scores = ref<Record<string, number>>({})
 const users = ref<Partial<Profile>[]>([])
 const shots = ref<Shot[]>([])
 
 const IAmPlaying = computed(() => users.value.some(u => u.user_id === userId.value))
 const percent = computed(() => users.value.length === 0 ? 0 : Math.round(100 * shots.value.length / (users.value.length * 13)))
+const chosed = computed(() => shots.value.filter(s => s.user_id === userId.value).map(s => s.choise))
 
 async function addMissingPlayer (player_id: string) {
   await supabase.from('match_player')
@@ -73,8 +74,7 @@ async function loadPlayers () {
 
   if (data) {
     for (const { score, user } of data) {
-      console.log('--- ~ loadPlayers ~ score', score)
-      // scores.value[user.user_id] = score
+      // TODO: scores.value[user.user_id] = score
       users.value.push(user)
     }
   }
@@ -82,7 +82,7 @@ async function loadPlayers () {
 
 async function loadShots () {
   const { data, count } = await supabase.from('match_player_shot')
-    .select('result,choise,user_id,value)', { count: 'exact' })
+    .select('id,result,choise,user_id,value)', { count: 'exact' })
     .eq('match_id', props.id)
 
   if (data) shots.value = data
@@ -111,7 +111,6 @@ function subscribeForNewResults () {
     .from<Shot>(`match_player_shot:match_id=eq.${props.id}`)
     .on('INSERT', payload => {
       shots.value.push(payload.new)
-      // shots.value[payload.new.user_id][payload.new.choise] = payload.new.result
       // TODO if match finish set winner?
     })
     .subscribe()
@@ -119,7 +118,7 @@ function subscribeForNewResults () {
 
 async function accept (choise: Choise) {
   if (result.value.length !== 5) return
-  // if (alreadyChosen.value(choise)) return
+  if (chosed.value.includes(choise)) return
   const { error } = await supabase.from('match_player_shot')
     .insert({
       match_id: props.id,
@@ -146,7 +145,6 @@ onMounted(async () => {
 
   await loadPlayers()
 
-  console.log('--- ~ onMounted ~ IAmPlaying.value', IAmPlaying.value)
   if (!IAmPlaying.value) {
     count === 0
       ? await addMissingPlayer(userId.value)

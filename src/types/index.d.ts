@@ -18,6 +18,7 @@ export type Result = Face[]
 export type Choise = '1'|'2'|'3'|'4'|'5'|'6'|'tris'|'poker'|'full'|'smallStair'|'bigStair'|'sium'|'sum'
 
 export interface Shot {
+  id: number
   choise: Choise
   result: Result
   value: number

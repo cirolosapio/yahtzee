@@ -8,9 +8,13 @@
   <n-drawer :show="Boolean(selected)" placement="bottom" height="400" @update-show="selected = undefined">
     <n-drawer-content closable>
       <template #header>
-        <div flex items-center>
+        <div w-full flex items-center>
           <n-avatar round :src="u?.avatar_url" />
-          <div ml2 mr1>{{ u?.full_name }}</div>
+          <div mx2>{{ u?.full_name }}</div>
+          <div text="gray md">
+            {{ total }}
+            <n-badge v-if="bonus > 0" type="success" value="bonus" />
+          </div>
         </div>
       </template>
       <scoreboard :score="score" />
@@ -19,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Profile, Shot } from '~/types'
+import type { Choise, Profile, Shot } from '~/types'
 
 const props = defineProps<{
   users: Partial<Profile>[]
@@ -31,21 +35,17 @@ const selected = ref<string>()
 const u = computed(() => props.users.find(u => u.user_id === selected.value))
 
 const score = computed(() => props.shots.reduce((res, shot) => {
-  res[shot.choise] = shot.value
+  if (shot.user_id === selected.value) res[shot.choise] = shot.value
   return res
-}, {
-  1: 0,
-  2: 0,
-  3: 0,
-  4: 0,
-  5: 0,
-  6: 0,
-  tris: 0,
-  poker: 0,
-  full: 0,
-  smallStair: 0,
-  bigStair: 0,
-  sium: 0,
-  sum: 0,
-}))
+}, {} as Record<Choise, number>))
+
+const bonus = computed(() => {
+  const leftTotal = Object.entries(props.shots).reduce((res, [choise, shot]) => {
+    if ('123456'.includes(choise)) res += shot.value
+    return res
+  }, 0)
+  return leftTotal > 62 ? 35 : 0
+})
+
+const total = computed(() => Object.values(score.value).reduce((res, v) => res + v, 0) + bonus.value)
 </script>

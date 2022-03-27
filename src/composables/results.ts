@@ -18,6 +18,22 @@ export const results = computed(() => ({
   full: (counters.value.includes(3) && counters.value.includes(2)) ? 25 : 0,
   smallStair: ['12345', '23456', '1234', '2345', '3456'].includes(sorted.value) ? 30 : 0,
   bigStair: ['12345', '23456'].includes(sorted.value) ? 40 : 0,
-  sium: counters.value.filter(v => v === 0).length === 5 ? 50 : 0,
+  sium: (result.value.length === 5 && counters.value.filter(v => v === 0).length === 5) ? 50 : 0,
   sum: sum.value,
 }))
+
+export const icons = {
+  1: 'i-ph-dice-one-fill',
+  2: 'i-ph-dice-two-fill',
+  3: 'i-ph-dice-three-fill',
+  4: 'i-ph-dice-four-fill',
+  5: 'i-ph-dice-five-fill',
+  6: 'i-ph-dice-six-fill',
+  tris: 'i-tabler-box-multiple-3',
+  poker: 'i-tabler-box-multiple-4',
+  full: 'i-ph-house-fill',
+  smallStair: 'i-mdi-stairs',
+  bigStair: 'i-medical-icon-i-stairs',
+  sium: 'i-ph-star-fill',
+  sum: 'i-ph-question-fill',
+}
