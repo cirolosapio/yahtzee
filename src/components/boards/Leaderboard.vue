@@ -65,10 +65,10 @@
 
 <script setup lang="ts">
 import type { Choise } from '~/types'
-import { icons, result, results, userId } from '~/composables'
+import { icons, result, results } from '~/composables'
 
 defineEmits<{ (e: 'accept', choise: Choise): void }>()
-const props = defineProps<{ chosed: Shot[] }>()
+const props = defineProps<{ chosed: Choise[] }>()
 
 const z = (n: number) => n === 0 ? undefined : n
 

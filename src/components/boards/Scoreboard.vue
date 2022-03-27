@@ -2,39 +2,39 @@
   <n-table size="small">
     <tbody text-center>
       <tr>
-        <th text-2xl><centered-icon :class="icons[1]" /></th>
+        <th text-2xl><centered-icon i-ph-dice-one-fill /></th>
         <td>{{ score[1] }}</td>
-        <th text-xl><centered-icon :class="icons.tris" /></th>
+        <th text-xl><centered-icon i-tabler-box-multiple-3 /></th>
         <td>{{ score.tris }}</td>
       </tr>
       <tr>
-        <th text-2xl><centered-icon :class="icons[2]" /></th>
+        <th text-2xl><centered-icon i-ph-dice-two-fill /></th>
         <td>{{ score[2] }}</td>
-        <th text-xl><centered-icon :class="icons.poker" /></th>
+        <th text-xl><centered-icon i-tabler-box-multiple-4 /></th>
         <td>{{ score.poker }}</td>
       </tr>
       <tr>
-        <th text-2xl><centered-icon :class="icons[3]" /></th>
+        <th text-2xl><centered-icon i-ph-dice-three-fill /></th>
         <td>{{ score[3] }}</td>
-        <th text-xl><centered-icon :class="icons['full']" /></th>
+        <th text-xl><centered-icon i-ph-house-fill /></th>
         <td>{{ score.full }}</td>
       </tr>
       <tr>
-        <th text-2xl><centered-icon :class="icons[4]" /></th>
+        <th text-2xl><centered-icon i-ph-dice-four-fill /></th>
         <td>{{ score[4] }}</td>
-        <th text-xl><centered-icon :class="icons.smallStair" /></th>
+        <th text-xl><centered-icon i-mdi-stairs /></th>
         <td>{{ score.smallStair }}</td>
       </tr>
       <tr>
-        <th text-2xl><centered-icon :class="icons[5]" /></th>
+        <th text-2xl><centered-icon i-ph-dice-five-fill /></th>
         <td>{{ score[5] }}</td>
-        <th text-xl><centered-icon :class="icons.bigStair" /></th>
+        <th text-xl><centered-icon i-medical-icon-i-stairs /></th>
         <td>{{ score.bigStair }}</td>
       </tr>
       <tr>
-        <th text-2xl><centered-icon :class="icons[6]" /></th>
+        <th text-2xl><centered-icon i-ph-dice-six-fill /></th>
         <td>{{ score[6] }}</td>
-        <th text-xl><centered-icon :class="icons.sium" /></th>
+        <th text-xl><centered-icon i-ph-star-fill /></th>
         <td>{{ score.sium }}</td>
       </tr>
       <tr>
@@ -49,9 +49,7 @@
 
 <script setup lang="ts">
 import type { Choise } from '~/types'
-import { icons } from '~/composables'
+// import { icons } from '~/composables'
 
 defineProps<{ score: Record<Partial<Choise>, number> }>()
-
-const z = (n: number) => n === 0 ? undefined : n
 </script>
