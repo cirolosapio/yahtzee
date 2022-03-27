@@ -15,8 +15,8 @@ import { loggedIn, supabase, toggleLoading } from '~/composables'
 const message = useMessage()
 const $router = useRouter()
 
-onMounted(() => {
-  loggedIn.value && $router.push('/')
+onMounted(async () => {
+  loggedIn.value && await $router.push('/')
 })
 
 const providers: Provider[] = ['github', 'google', 'twitter', 'discord', 'twitch', 'spotify'] // facebook, azure

@@ -12,15 +12,13 @@
           </n-dialog-provider>
         </n-message-provider>
 
-        <n-layout flex-grow>
-          <n-layout embedded>
-            <main font-sans text="gray-700 dark:gray-200">
-              <n-message-provider>
-                <router-view />
-              </n-message-provider>
-            </main>
-          </n-layout>
-        </n-layout>
+        <main flex-grow font-sans text="gray-700 dark:gray-200">
+          <n-message-provider>
+            <n-dialog-provider>
+              <router-view />
+            </n-dialog-provider>
+          </n-message-provider>
+        </main>
 
         <the-footer />
       </div>
@@ -30,16 +28,19 @@
 
 <script setup lang="ts">
 import { darkTheme, dateItIT, itIT } from 'naive-ui'
-import { isDark, isLoading, supabase, user } from '~/composables'
+import { isDark, isLoading, supabase, userId } from '~/composables'
 
 const visibility = useDocumentVisibility()
 
-watchEffect(async () => {
-  if (user.value?.user_id) {
-    await supabase
-      .from('profiles')
-      .update({ online: visibility.value === 'visible' })
-      .eq('user_id', user.value.user_id)
-  }
-})
+watch(
+  visibility,
+  async state => {
+    if (userId.value) {
+      await supabase
+        .from('profiles')
+        .update({ online: state === 'visible' })
+        .eq('user_id', userId.value)
+    }
+  },
+)
 </script>

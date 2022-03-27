@@ -1,24 +1,16 @@
 import { supabase } from '~/composables'
 
-export interface User {
-  user_id: string
-  full_name: string
-  avatar_url: string
-  online: boolean
-  created_at: string
-}
-
-export const user = ref<User>()
-
-export const loggedIn = computed(() => !!user.value)
+export const userId = ref<string|undefined>(supabase.auth.user()?.id)
+export const loggedIn = computed(() => !!userId.value)
 
 supabase.auth.onAuthStateChange(async (_, session) => {
-  if (session?.user?.id) {
-    const { data } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('user_id', session?.user?.id)
-      .single()
-    if (data) user.value = data
-  } else user.value = undefined
+  userId.value = session?.user?.id
+  // if (session?.user?.id) {
+  //   const { data } = await supabase
+  //     .from('profiles')
+  //     .select('*')
+  //     .eq('user_id', session.user.id)
+  //     .single()
+  //   if (data) user.value = data
+  // } else user.value = undefined
 })

@@ -9,16 +9,16 @@ export const supabase = createClient(
   },
 )
 
-// export async function refresh<T> (table: string, columns = '*'): Promise<T[]> {
-//   const { data } = await supabase
-//     .from<T>(table)
-//     .select(columns)
-//   return data ?? []
-// }
+export async function refresh<T> (table: string, columns = '*'): Promise<T[]> {
+  const { data } = await supabase
+    .from<T>(table)
+    .select(columns)
+  return data ?? []
+}
 
-// export async function destroy (table: string, value: number, column = 'id') {
-//   await supabase
-//     .from(table)
-//     .delete({ returning: 'minimal' })
-//     .eq(column, value)
-// }
+export async function destroy (table: string, value: number, column = 'id') {
+  await supabase
+    .from(table)
+    .delete({ returning: 'minimal' })
+    .eq(column, value)
+}

@@ -22,13 +22,13 @@
 
 <script setup lang="ts">
 import type { RealtimeSubscription } from '@supabase/supabase-js'
-import type { User } from '~/composables'
 import { supabase, toggleLoading } from '~/composables'
+import type { Profile } from '~/types'
 
 const message = useMessage()
 
 let userSub: RealtimeSubscription
-const users = ref<User[]>([])
+const users = ref<Profile[]>([])
 
 const onlineUsers = computed(() => users.value.reduce((tot, { online }) => tot + (online ? 1 : 0), 0))
 

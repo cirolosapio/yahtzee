@@ -1,12 +1,14 @@
 
 <template>
   <n-layout-footer bordered p2>
-    <nav flex items-center :class="loggedIn ? 'justify-between' : 'justify-center'">
-      <div v-if="loggedIn" flex items-center>
+    <nav flex items-center justify-center>
+      <!--
+        <div v-if="loggedIn" flex items-center>
         <n-avatar round :src="user?.avatar_url" />
         <div ml2 mr1>{{ user?.full_name }}</div>
         <div i-ph-circle-fill :class="isOnline ? 'text-green' : 'text-red'" text-xs />
-      </div>
+        </div>
+      -->
 
       <n-tooltip>
         <template #trigger>
@@ -32,6 +34,5 @@
 </template>
 
 <script setup lang="ts">
-import { isDark, loggedIn, toggleDark, user } from '~/composables'
-const { isOnline } = useNetwork()
+import { isDark, toggleDark } from '~/composables'
 </script>
