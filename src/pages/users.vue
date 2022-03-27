@@ -6,6 +6,7 @@
         <tr>
           <th style="width: 5px" />
           <th>Utenti</th>
+          <th />
         </tr>
       </thead>
       <tbody>
@@ -14,6 +15,7 @@
             <div i-ph-circle-fill :class="user.online ? 'text-green' : 'text-red'" text-xs />
           </td>
           <td>{{ user.full_name }}</td>
+          <td>{{ user.email }}</td>
         </tr>
       </tbody>
     </n-table>
@@ -34,7 +36,7 @@ const onlineUsers = computed(() => users.value.reduce((tot, { online }) => tot +
 
 async function refresh () {
   toggleLoading()
-  const { data } = await supabase.from('profiles').select('user_id,full_name,online')
+  const { data } = await supabase.from('profiles').select('user_id,full_name,email,online')
   if (data) users.value = data
   toggleLoading()
 }
