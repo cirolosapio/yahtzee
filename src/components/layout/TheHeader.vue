@@ -14,8 +14,10 @@
           <n-divider vertical />
 
           <n-button text circle @click="toggle()">
-            <centered-icon v-if="isFullscreen" text-xl i-mdi-fullscreen-exit />
-            <centered-icon v-else text-xl i-mdi-fullscreen />
+            <template #icon>
+              <centered-icon v-if="isFullscreen" text-xl i-mdi-fullscreen-exit />
+              <centered-icon v-else text-xl i-mdi-fullscreen />
+            </template>
           </n-button>
 
           <menu-item placement="left" label="Chiudi Sessione" icon="i-uiw-logout" @click="logout()" />

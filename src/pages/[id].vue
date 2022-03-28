@@ -12,7 +12,9 @@
       <template #extra>
         <!--<n-dropdown :options="options" placement="bottom-start">-->
         <n-button text @click="settings = !settings">
-          <centered-icon i-ph-monitor-play text-xl />
+          <template #icon>
+            <centered-icon i-ph-monitor-play text-xl />
+          </template>
         </n-button>
       </template>
     </n-page-header>
@@ -41,6 +43,8 @@ import { result, results, supabase, toggleLoading, userId } from '~/composables'
 import type { Choise, Match, Profile, Shot } from '~/types'
 
 const message = useMessage()
+
+onBeforeUnmount(() => { result.value = [] })
 
 let newUserSubscription: RealtimeSubscription
 let newResultSubscription: RealtimeSubscription
@@ -128,14 +132,13 @@ async function loadMatch () {
 async function accept (choise: Choise) {
   if (result.value.length !== 5) return
   if (chosed.value.includes(choise)) return
-  const value = '123456'.includes(choise) ? results.value.face(choise) : results.value[choise]
-  if (choise === 'sium' && value === 50) sound.play()
+  import.meta.env.PROD && choise === 'sium' && results.value[choise] === 50 && sound.play()
   const { error } = await supabase.from('match_player_shot')
     .insert({
       match_id: props.id,
       user_id: supabase.auth.user()?.id, // props.users[currentUser.value]
       result: result.value,
-      value,
+      value: results.value[choise],
       choise,
     })
   if (!error) {

@@ -1,4 +1,4 @@
-import type { Face, Result } from '~/types'
+import type { Result } from '~/types'
 
 export const result = ref<Result>([])
 
@@ -12,7 +12,13 @@ const counters = computed(() =>
 )
 
 export const results = computed(() => ({
-  face: (face: Face) => counters.value[face - 1] * face,
+  1: counters.value[0],
+  2: counters.value[1],
+  3: counters.value[2],
+  4: counters.value[3],
+  5: counters.value[4],
+  6: counters.value[5],
+  // face: (face: Face) => counters.value[face - 1] * face,
   tris: counters.value.some(v => v > 2) ? sum.value : 0,
   poker: counters.value.some(v => v > 3) ? sum.value : 0,
   full: (counters.value.includes(3) && counters.value.includes(2)) ? 25 : 0,

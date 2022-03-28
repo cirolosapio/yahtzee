@@ -4,7 +4,9 @@
       <thead text-center>
       <th style="padding: 0">
       <n-button block text circle @click="$router.push({ name: 'index' })">
+      <template #icon>
       <centered-icon i-ph-arrow-left-bold />
+      </template>
       </n-button>
       </th>
       <th style="padding: 5px 0 0 0">
@@ -19,37 +21,37 @@
     <tbody text-center>
       <tr>
         <th text-2xl @click="$emit('accept', '1')"><centered-icon :class="klass('1')" /></th>
-        <td>{{ z(results.face(1)) }}</td>
+        <td>{{ z(results[1]) }}</td>
         <th text-xl @click="$emit('accept', 'tris')"><centered-icon :class="klass('tris')" /></th>
         <td>{{ z(results.tris) }}</td>
       </tr>
       <tr>
         <th text-2xl @click="$emit('accept', '2')"><centered-icon :class="klass('2')" /></th>
-        <td>{{ z(results.face(2)) }}</td>
+        <td>{{ z(results[2]) }}</td>
         <th text-xl @click="$emit('accept', 'poker')"><centered-icon :class="klass('poker')" /></th>
         <td>{{ z(results.poker) }}</td>
       </tr>
       <tr>
         <th text-2xl @click="$emit('accept', '3')"><centered-icon :class="klass('3')" /></th>
-        <td>{{ z(results.face(3)) }}</td>
+        <td>{{ z(results[3]) }}</td>
         <th text-xl @click="$emit('accept', 'full')"><centered-icon :class="klass('full')" /></th>
         <td>{{ z(results.full) }}</td>
       </tr>
       <tr>
         <th text-2xl @click="$emit('accept', '4')"><centered-icon :class="klass('4')" /></th>
-        <td>{{ z(results.face(4)) }}</td>
+        <td>{{ z(results[4]) }}</td>
         <th text-xl @click="$emit('accept', 'smallStair')"><centered-icon :class="klass('smallStair')" /></th>
         <td>{{ z(results.smallStair) }}</td>
       </tr>
       <tr>
         <th text-2xl @click="$emit('accept', '5')"><centered-icon :class="klass('5')" /></th>
-        <td>{{ z(results.face(5)) }}</td>
+        <td>{{ z(results[5]) }}</td>
         <th text-xl @click="$emit('accept', 'bigStair')"><centered-icon :class="klass('bigStair')" /></th>
         <td>{{ z(results.bigStair) }}</td>
       </tr>
       <tr>
         <th text-2xl @click="$emit('accept', '6')"><centered-icon :class="klass('6')" /></th>
-        <td>{{ z(results.face(6)) }}</td>
+        <td>{{ z(results[6]) }}</td>
         <th text-xl @click="$emit('accept', 'sium')"><centered-icon :class="klass('sium')" /></th>
         <td>{{ z(results.sium) }}</td>
       </tr>

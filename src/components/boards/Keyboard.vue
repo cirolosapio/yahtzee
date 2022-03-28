@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Face, Result } from '~/types'
+import type { Face } from '~/types'
 import { isDark, result } from '~/composables'
 
 defineProps<{ disable: boolean }>()

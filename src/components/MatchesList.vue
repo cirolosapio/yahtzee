@@ -21,7 +21,9 @@
         <template #suffix>
           <div flex flex-col justify-center>
             <n-button v-if="match.author_id === userId" text @click.stop="$emit('destroy', match.id, idx)">
-              <centered-icon i-carbon-close text-xl />
+              <template #icon>
+                <centered-icon i-carbon-close text-xl />
+              </template>
             </n-button>
           </div>
         </template>

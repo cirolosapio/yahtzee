@@ -4,9 +4,7 @@
       <matches-list v-if="matches.length > 0" :matches="matches" @destroy="(id, idx) => destroyMatch(id, idx)" />
       <n-result v-else-if="!isLoading" mt24 status="418" title="Ancora nessuna partita" description="You know life is always ridiculous">
         <template #footer>
-          <n-button size="small" secondary @click="createNewMatch()">
-            Crea
-          </n-button>
+          <n-button size="small" secondary @click="createNewMatch()">Crea</n-button>
         </template>
       </n-result>
     </div>

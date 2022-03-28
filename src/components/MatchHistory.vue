@@ -18,7 +18,9 @@
           <template v-if="can" #suffix>
             <div flex flex-col justify-center>
               <n-button text circle @click="destroyShot(shot.id, idx)">
-                <centered-icon i-ph-x />
+                <template #icon>
+                  <centered-icon i-ph-x />
+                </template>
               </n-button>
             </div>
           </template>
