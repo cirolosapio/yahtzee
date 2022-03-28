@@ -17,7 +17,7 @@
           </div>
         </div>
       </template>
-      <scoreboard :score="score" />
+      <scoreboard :score="score" :left="left" :bonus="bonus" :total="total" />
     </n-drawer-content>
   </n-drawer>
 </template>
@@ -39,13 +39,12 @@ const score = computed(() => props.shots.reduce((res, shot) => {
   return res
 }, {} as Record<Choise, number>))
 
-const bonus = computed(() => {
-  const leftTotal = Object.entries(score.value).reduce((res, [choise, value]) => {
-    if ('123456'.includes(choise)) res += value
-    return res
-  }, 0)
-  return leftTotal > 62 ? 35 : 0
-})
+const left = computed(() => Object.entries(score.value).reduce((res, [choise, value]) => {
+  if ('123456'.includes(choise)) res += value
+  return res
+}, 0))
+
+const bonus = computed(() => left.value > 62 ? 35 : 0)
 
 const total = computed(() => Object.values(score.value).reduce((res, v) => res + v, 0) + bonus.value)
 </script>

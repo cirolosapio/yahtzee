@@ -38,8 +38,11 @@
         <td>{{ score.sium }}</td>
       </tr>
       <tr>
-        <td />
-        <td />
+        <td colspan="2">
+          {{ left }}
+          <template v-if="bonus">+ {{ bonus }}</template>
+          + {{ total -bonus -left }}
+        </td>
         <th text-2xl><centered-icon i-ph-question-fill /></th>
         <td>{{ score.sum }}</td>
       </tr>
@@ -51,5 +54,10 @@
 import type { Choise } from '~/types'
 // import { icons } from '~/composables'
 
-defineProps<{ score: Record<Partial<Choise>, number> }>()
+defineProps<{
+  score: Record<Choise, number>
+  left: number
+  bonus: number
+  total: number
+}>()
 </script>

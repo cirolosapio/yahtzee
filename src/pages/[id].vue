@@ -119,7 +119,11 @@ function subscribeForNewResults () {
     .from<Shot>(`match_player_shot:match_id=eq.${props.id}`)
     .on('INSERT', payload => {
       shots.value.push(payload.new)
-      // TODO if match finish set winner?
+      // TODO if match finish set winner? non qui
+    })
+    .on('DELETE', payload => {
+      const idx = shots.value.findIndex(s => s.id === payload.old.id)
+      shots.value.splice(idx, 1)
     })
     .subscribe()
 }
@@ -130,6 +134,7 @@ async function loadMatch () {
 }
 
 async function accept (choise: Choise) {
+  toggleLoading()
   if (result.value.length !== 5) return
   if (chosed.value.includes(choise)) return
   import.meta.env.PROD && choise === 'sium' && results.value[choise] === 50 && sound.play()
@@ -146,6 +151,7 @@ async function accept (choise: Choise) {
     // else currentUser.value++
     result.value = []
   }
+  toggleLoading()
 }
 
 onMounted(async () => {
