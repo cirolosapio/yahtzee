@@ -40,7 +40,7 @@ const score = computed(() => props.shots.reduce((res, shot) => {
 }, {} as Record<Choise, number>))
 
 const bonus = computed(() => {
-  const leftTotal = props.shots.reduce((res, { choise, value }) => {
+  const leftTotal = Object.entries(score.value).reduce((res, [choise, value]) => {
     if ('123456'.includes(choise)) res += value
     return res
   }, 0)
