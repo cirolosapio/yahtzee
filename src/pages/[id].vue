@@ -1,5 +1,5 @@
 <template>
-  <match-history v-model="settings" v-model:shots="shots" :users="users" />
+  <match-history v-model="settings" v-model:shots="shots" :can="match.author_id === userId" :users="users" />
 
   <div h-full flex flex-col>
     <n-progress border-radius="0" type="line" :status="percent === 100 ? 'success' : undefined" :percentage="percent" indicator-placement="inside" />
@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import type { RealtimeSubscription } from '@supabase/supabase-js'
 import { result, results, supabase, toggleLoading, userId } from '~/composables'
-import type { Choise, Profile, Shot } from '~/types'
+import type { Choise, Match, Profile, Shot } from '~/types'
 
 const message = useMessage()
 
@@ -50,6 +50,7 @@ onUnmounted(async () => {
 
 const props = defineProps<{ id: string }>()
 
+const match = ref<Partial<Match>>({})
 const settings = ref(false)
 // const scores = ref<Record<string, number>>({})
 const users = ref<Partial<Profile>[]>([])
@@ -74,6 +75,7 @@ async function loadPlayers () {
 
   if (data) {
     for (const { score, user } of data) {
+      console.log('--- ~ loadPlayers ~ score', score)
       // TODO: scores.value[user.user_id] = score
       users.value.push(user)
     }
@@ -116,6 +118,11 @@ function subscribeForNewResults () {
     .subscribe()
 }
 
+async function loadMatch () {
+  const { data } = await supabase.from<Match>('matches').select('*').eq('id', props.id).single()
+  if (data) match.value = data
+}
+
 async function accept (choise: Choise) {
   if (result.value.length !== 5) return
   if (chosed.value.includes(choise)) return
@@ -137,11 +144,14 @@ async function accept (choise: Choise) {
 onMounted(async () => {
   toggleLoading()
 
+  await loadMatch()
+
   const count = await loadShots()
 
   if (count === 0) subscribeForNewPlayers()
 
-  if (count !== users.value.length * 13) subscribeForNewResults()
+  // TODO if (count !== users.value.length * 13)
+  subscribeForNewResults()
 
   await loadPlayers()
 

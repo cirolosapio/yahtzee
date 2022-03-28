@@ -15,7 +15,7 @@
             </div>
           </template>
 
-          <template #suffix>
+          <template v-if="can" #suffix>
             <div flex flex-col justify-center>
               <n-button text circle @click="destroyShot(shot.id, idx)">
                 <centered-icon i-ph-x />
@@ -39,6 +39,7 @@ const emit = defineEmits<{
 
 const props = defineProps<{
   users: Partial<Profile>[]
+  can: boolean
   modelValue: boolean
   shots: Shot[]
 }>()
