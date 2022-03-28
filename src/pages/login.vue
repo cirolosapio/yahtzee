@@ -15,7 +15,7 @@ import { loggedIn, supabase, toggleLoading } from '~/composables'
 const message = useMessage()
 const $router = useRouter()
 
-onMounted(async () => {
+watchEffect(async () => {
   loggedIn.value && await $router.push('/')
 })
 
