@@ -35,6 +35,7 @@
 </template>
 
 <script setup lang="ts">
+import { Howl } from 'howler'
 import type { RealtimeSubscription } from '@supabase/supabase-js'
 import { result, results, supabase, toggleLoading, userId } from '~/composables'
 import type { Choise, Match, Profile, Shot } from '~/types'
@@ -50,6 +51,7 @@ onUnmounted(async () => {
 
 const props = defineProps<{ id: string }>()
 
+const sound = new Howl({ src: ['sium.mp3'] })
 const match = ref<Partial<Match>>({})
 const settings = ref(false)
 // const scores = ref<Record<string, number>>({})
@@ -126,12 +128,14 @@ async function loadMatch () {
 async function accept (choise: Choise) {
   if (result.value.length !== 5) return
   if (chosed.value.includes(choise)) return
+  const value = '123456'.includes(choise) ? results.value.face(choise) : results.value[choise]
+  if (choise === 'sium' && value === 50) sound.play()
   const { error } = await supabase.from('match_player_shot')
     .insert({
       match_id: props.id,
       user_id: supabase.auth.user()?.id, // props.users[currentUser.value]
       result: result.value,
-      value: '123456'.includes(choise) ? results.value.face(choise) : results.value[choise],
+      value,
       choise,
     })
   if (!error) {
