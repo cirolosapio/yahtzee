@@ -1,11 +1,9 @@
 <template>
   <div w-full mt-24 grid gap-2 gap-y-44 grid-cols-3>
     <n-button v-for="provider in providers" :key="provider" text-4xl :disabled="!['github', 'google'].includes(provider)" text circle @click="signInWith(provider)">
-      <template #icon>
-        <centered-icon>
-          <provider-icon :name="provider" hover:scale-125 transition duration-300 />
-        </centered-icon>
-      </template>
+      <centered-icon>
+        <provider-icon :name="provider" hover:scale-125 transition duration-300 />
+      </centered-icon>
     </n-button>
   </div>
 </template>
