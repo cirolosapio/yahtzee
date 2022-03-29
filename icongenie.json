@@ -1,0 +1,9 @@
+{
+  "params": {
+    "icon": "dice.png",
+    "quality": "12",
+    "include": [
+      "pwa"
+    ]
+  }
+}

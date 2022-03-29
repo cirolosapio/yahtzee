@@ -52,7 +52,7 @@ export default defineConfig({
     Unocss(),
 
     VitePWA({
-      // includeAssets: ['favicon.svg', 'robots.txt', 'safari-pinned-tab.svg'],
+      includeAssets: ['favicon.ico', 'robots.txt', 'safari-pinned-tab.svg'],
       manifest: {
         // devOptions: {
         //   enabled: true,
@@ -62,22 +62,22 @@ export default defineConfig({
         // theme_color: '',
         lang: 'it',
         icons: [
-          // {
-          //   src: '/android-chrome-192x192.png',
-          //   sizes: '192x192',
-          //   type: 'image/png',
-          // },
-          // {
-          //   src: '/android-chrome-512x512.png',
-          //   sizes: '512x512',
-          //   type: 'image/png',
-          // },
-          // {
-          //   src: '/android-chrome-512x512.png',
-          //   sizes: '512x512',
-          //   type: 'image/png',
-          //   purpose: 'any maskable',
-          // },
+          {
+            src: '/icon-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: '/icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+          {
+            src: '/icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable',
+          },
         ],
       },
     }),
