@@ -134,9 +134,9 @@ async function loadMatch () {
 }
 
 async function accept (choise: Choise) {
+  if (result.value.length !== 5) return
+  if (chosed.value.includes(choise)) return
   await handleLoading(async () => {
-    if (result.value.length !== 5) return
-    if (chosed.value.includes(choise)) return
     import.meta.env.PROD && choise === 'sium' && results.value[choise] === 50 && sound.play()
     const { error } = await supabase.from('match_player_shot')
       .insert({
