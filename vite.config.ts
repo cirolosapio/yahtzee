@@ -59,7 +59,8 @@ export default defineConfig({
         // },
         name: 'Sium',
         short_name: 'Sium',
-        theme_color: '061121',
+        theme_color: '#061121',
+        background_color: '#061121',
         lang: 'it',
         icons: [
           {
