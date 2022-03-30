@@ -1,8 +1,10 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { createPinia } from 'pinia'
 import routes from 'virtual:generated-pages'
 import App from './App.vue'
-import { supabase } from '~/composables'
+import { supabase, userId } from '~/composables'
+import { useUsersStore } from '~/stores'
 
 import '@unocss/reset/tailwind.css'
 import './styles/main.css'
@@ -26,4 +28,20 @@ router.beforeEach(async (to, _, next) => {
 
 createApp(App)
   .use(router)
+  .use(createPinia())
   .mount('#app')
+
+const usersStore = useUsersStore()
+usersStore.init().then(() => {
+  watch(
+    useDocumentVisibility(),
+    async state => {
+      if (userId.value) {
+        await supabase
+          .from('profiles')
+          .update({ online: state === 'visible' })
+          .eq('user_id', userId.value)
+      }
+    },
+  )
+})
