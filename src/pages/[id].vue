@@ -11,6 +11,12 @@
       <!--<template #subtitle></template>-->
 
       <template #extra>
+        <n-button v-if="isSupported" text circle @click="toggleWakeLock()">
+          <template #icon>
+            <centered-icon v-if="isActive" i-ph-lock-open-duotone />
+            <centered-icon v-else i-ph-lock-duotone />
+          </template>
+        </n-button>
         <!--<n-dropdown :options="options" placement="bottom-start">-->
         <n-button text @click="settings = !settings">
           <template #icon>
@@ -153,6 +159,11 @@ async function accept (choise: Choise) {
       result.value = []
     }
   })
+}
+
+const { isSupported, isActive, request, release } = useWakeLock()
+function toggleWakeLock () {
+  isActive.value ? release() : request('screen')
 }
 
 onMounted(async () => {
