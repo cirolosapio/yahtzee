@@ -59,7 +59,7 @@ export default defineConfig({
         // },
         name: 'Siuum',
         short_name: 'Siuum',
-        // theme_color: '',
+        theme_color: '061121',
         lang: 'it',
         icons: [
           {
