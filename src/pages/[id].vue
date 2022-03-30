@@ -3,6 +3,7 @@
 
   <div h-full flex flex-col>
     <n-progress border-radius="0" type="line" :status="percent === 100 ? 'success' : undefined" :percentage="percent" indicator-placement="inside" />
+
     <n-page-header m2 @back="$router.push({ name: 'index' })">
       <template #title>
         MATCH #{{ id }}
@@ -170,7 +171,7 @@ onMounted(async () => {
 
   if (!IAmPlaying.value) {
     count === 0
-      ? await addMissingPlayer(userId.value)
+      ? (userId.value && await addMissingPlayer(userId.value))
       : message.warning('La partita è gia iniziata')
   }
 

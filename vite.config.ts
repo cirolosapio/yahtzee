@@ -57,8 +57,8 @@ export default defineConfig({
         // devOptions: {
         //   enabled: true,
         // },
-        name: 'Siuum',
-        short_name: 'Siuum',
+        name: 'Sium',
+        short_name: 'Sium',
         theme_color: '061121',
         lang: 'it',
         icons: [
