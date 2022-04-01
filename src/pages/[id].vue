@@ -11,18 +11,25 @@
       <!--<template #subtitle></template>-->
 
       <template #extra>
-        <n-button v-if="isSupported" text circle @click="toggleWakeLock()">
-          <template #icon>
-            <centered-icon v-if="isActive" i-ph-lock-open-duotone />
-            <centered-icon v-else i-ph-lock-duotone />
-          </template>
-        </n-button>
-        <!--<n-dropdown :options="options" placement="bottom-start">-->
-        <n-button text @click="settings = !settings">
-          <template #icon>
-            <centered-icon i-ph-monitor-play text-xl />
-          </template>
-        </n-button>
+        <div flex space-x-2>
+          <n-tooltip>
+            <template #trigger>
+              <n-button v-if="isSupported" text circle @click="toggleWakeLock()">
+                <template #icon>
+                  <centered-icon v-if="isActive" i-mdi-lock />
+                  <centered-icon v-else i-mdi-lock-open-variant />
+                </template>
+              </n-button>
+            </template>
+            {{ isActive ? 'Disabilita': 'Abilita' }} Wake Lock
+          </n-tooltip>
+          <!--<n-dropdown :options="options" placement="bottom-start">-->
+          <n-button text @click="settings = !settings">
+            <template #icon>
+              <centered-icon i-ph-monitor-play text-xl />
+            </template>
+          </n-button>
+        </div>
       </template>
     </n-page-header>
 
@@ -81,6 +88,7 @@ async function addMissingPlayer (player_id: string) {
     })
 }
 
+// TODO
 async function loadPlayers () {
   const { data } = await supabase.from('match_player')
     .select('score,user:profiles(user_id,avatar_url,full_name)')
