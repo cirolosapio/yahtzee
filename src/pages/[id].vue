@@ -51,8 +51,10 @@
 </template>
 
 <script setup lang="ts">
-import { Howl } from 'howler'
 import type { RealtimeSubscription } from '@supabase/supabase-js'
+import sium from '/sium.mp3'
+import he_sium from '/he_sium.mp3'
+import { useSound } from '@vueuse/sound'
 import { handleLoading, result, results, supabase, toggleLoading, userId } from '~/composables'
 import type { Choise, Match, Profile, Shot } from '~/types'
 
@@ -69,7 +71,8 @@ onUnmounted(async () => {
 
 const props = defineProps<{ id: string }>()
 
-const sound = new Howl({ src: ['sium.mp3'] })
+const siumSound = useSound(sium)
+const heSiumSound = useSound(he_sium)
 const match = ref<Partial<Match>>({})
 const settings = ref(false)
 // const scores = ref<Record<string, number>>({})
@@ -152,8 +155,7 @@ async function accept (choise: Choise) {
   if (result.value.length !== 5) return
   if (chosed.value.includes(choise)) return
   await handleLoading(async () => {
-    // if (import.meta.env.PROD && choise === 'sium') results.value[choise] === 50 ? sound.play() : sound2.play()
-    import.meta.env.PROD && choise === 'sium' && results.value[choise] === 50 && sound.play()
+    if (import.meta.env.PROD && choise === 'sium') results.value[choise] === 50 ? siumSound.play() : heSiumSound.play()
     const { error } = await supabase.from('match_player_shot')
       .insert({
         match_id: props.id,
