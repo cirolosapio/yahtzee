@@ -7,17 +7,23 @@
 
       <div flex items-center space-x-2>
         <template v-if="loggedIn">
-          <menu-item label="Game" icon="i-ph-game-controller-duotone" name="index" />
-          <menu-item label="Utenti" icon="i-ph-user-list-duotone" name="users" />
-          <menu-item label="Roadmap" icon="i-ph-graduation-cap-duotone" name="roadmap" />
+          <n-tabs size="small" :value="String($route.name)" type="bar" @update:value="name => $router.push({ name })">
+            <n-tab name="index">
+              <div text-4 i-ph-game-controller-duotone />
+            </n-tab>
+            <n-tab name="users">
+              <div text-4 i-ph-user-list-duotone />
+            </n-tab>
+            <n-tab name="roadmap">
+              <div text-4 i-ph-graduation-cap-duotone />
+            </n-tab>
+          </n-tabs>
 
           <n-divider vertical />
 
           <n-button text circle @click="toggle()">
-            <template #icon>
-              <centered-icon v-if="isFullscreen" text-xl i-mdi-fullscreen-exit />
-              <centered-icon v-else text-xl i-mdi-fullscreen />
-            </template>
+            <centered-icon v-if="isFullscreen" text-xl i-mdi-fullscreen-exit />
+            <centered-icon v-else text-xl i-mdi-fullscreen />
           </n-button>
 
           <menu-item placement="left" label="Chiudi Sessione" icon="i-uiw-logout" @click="logout()" />

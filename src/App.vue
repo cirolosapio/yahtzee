@@ -1,5 +1,5 @@
 <template>
-  <n-config-provider :theme="isDark ? darkTheme : null" :locale="itIT" :date-locale="dateItIT">
+  <n-config-provider :theme-overrides="overrides" :theme="isDark ? darkTheme : null" :locale="itIT" :date-locale="dateItIT">
     <n-notification-provider>
       <pwa-notification />
     </n-notification-provider>
@@ -27,6 +27,13 @@
 </template>
 
 <script setup lang="ts">
+import type { GlobalThemeOverrides } from 'naive-ui'
 import { darkTheme, dateItIT, itIT } from 'naive-ui'
 import { isDark, isLoading } from '~/composables'
+
+const overrides: GlobalThemeOverrides = {
+  Tabs: {
+    tabGapSmallBar: '10px',
+  },
+}
 </script>
