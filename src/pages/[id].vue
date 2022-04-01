@@ -70,7 +70,6 @@ onUnmounted(async () => {
 const props = defineProps<{ id: string }>()
 
 const sound = new Howl({ src: ['sium.mp3'] })
-const sound2 = new Howl({ src: ['he_sium.mp3'] })
 const match = ref<Partial<Match>>({})
 const settings = ref(false)
 // const scores = ref<Record<string, number>>({})
@@ -153,7 +152,8 @@ async function accept (choise: Choise) {
   if (result.value.length !== 5) return
   if (chosed.value.includes(choise)) return
   await handleLoading(async () => {
-    if (import.meta.env.PROD && choise === 'sium') results.value[choise] === 50 ? sound.play() : sound2.play()
+    // if (import.meta.env.PROD && choise === 'sium') results.value[choise] === 50 ? sound.play() : sound2.play()
+    import.meta.env.PROD && choise === 'sium' && results.value[choise] === 50 && sound.play()
     const { error } = await supabase.from('match_player_shot')
       .insert({
         match_id: props.id,
