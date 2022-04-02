@@ -3,13 +3,16 @@ import type { Result } from '~/types'
 export const result = ref<Result>([])
 
 const sum = computed(() => result.value.reduce((t, val) => t + val, 0))
-export const sorted = computed(() => [...new Set(result.value)].sort((a, b) => a - b).join(''))
+const sorted = computed(() => [...new Set(result.value)].sort((a, b) => a - b).join(''))
 const counters = computed(() =>
   result.value.reduce((res, face) => {
     res[face - 1]++
     return res
   }, Array.from({ length: 6 }, () => 0)),
 )
+
+export const shaked = ref(0)
+export const picked = ref<number[]>([])
 
 export const results = computed(() => ({
   1: counters.value[0],

@@ -16,9 +16,10 @@
 
 <script setup lang="ts">
 import { destroy, isLoading, supabase, toggleLoading, userId } from '~/composables'
-import type { Match } from '~/types'
+import type { KeyboardType, Match } from '~/types'
 
 const $router = useRouter()
+const dialog = useDialog()
 
 const matches = ref<Match[]>([])
 
@@ -47,7 +48,7 @@ async function destroyMatch (match_id: number, idx: number) {
   toggleLoading()
   await Promise.all([
     destroy('match_player_shot', match_id, 'match_id'),
-    await destroy('match_player', match_id, 'match_id'),
+    destroy('match_player', match_id, 'match_id'),
   ])
   await destroy('matches', match_id)
   matches.value?.splice(idx, 1)
@@ -55,9 +56,21 @@ async function destroyMatch (match_id: number, idx: number) {
 }
 
 async function createNewMatch () {
-  toggleLoading()
-  const { data } = await supabase.from('matches').insert({ author_id: userId.value }).single()
+  dialog.success({
+    showIcon: false,
+    title: 'Crea una nuova partita',
+    content: 'Come vuoi che siano gestiti i lanci?',
+    negativeText: 'Dadi',
+    positiveText: 'Tastiera',
+    positiveButtonProps: { quaternary: true },
+    negativeButtonProps: { quaternary: true },
+    onPositiveClick: async () => { await storeMatch('numeric') },
+    onNegativeClick: async () => { await storeMatch('casual') },
+  })
+}
+
+async function storeMatch (keyboard: KeyboardType) {
+  const { data } = await supabase.from('matches').insert({ author_id: userId.value, keyboard }).single()
   data && await $router.push({ name: 'id', params: { id: data.id } })
-  toggleLoading()
 }
 </script>

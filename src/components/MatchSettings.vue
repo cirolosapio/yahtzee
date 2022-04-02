@@ -1,7 +1,36 @@
 <template>
   <n-drawer :show="modelValue" width="90%" @update-show="v => $emit('update:modelValue', v)">
-    <n-drawer-content closable title="Storico">
-      <n-list>
+    <n-drawer-content closable>
+      <template #header>
+        <div flex space-x-2 items-center>
+          <div i-ph-gear-duotone />
+          <div>Impostazioni</div>
+        </div>
+      </template>
+
+      <!--
+        <n-switch :disabled="disable" :value="keyboard" checked-value="numeric" unchecked-value="casual" w-full :round="false" @update:value="val => emit('update:keyboard', val)">
+        <template #checked-icon>
+        <div text-xl i-ph-keyboard />
+        </template>
+        <template #unchecked-icon>
+        <div text-xl i-mdi-dice />
+        </template>
+        <template #checked>Keyboard</template>
+        <template #unchecked>Dice</template>
+        </n-switch>
+        <n-divider />
+      -->
+
+      <n-page-header>
+        <template #title>
+          <div flex space-x-2 items-center>
+            <div i-ph-monitor-play />
+            <div>Storico</div>
+          </div>
+        </template>
+      </n-page-header>
+      <n-list v-if="shots.length>0">
         <n-list-item v-for="(shot, idx) in shots" :key="shot.id">
           <div flex space-x-2 items-center>
             <div :class="icons[shot.choise]" />
@@ -26,6 +55,8 @@
           </template>
         </n-list-item>
       </n-list>
+
+      <n-empty v-else mt4 />
     </n-drawer-content>
   </n-drawer>
 </template>

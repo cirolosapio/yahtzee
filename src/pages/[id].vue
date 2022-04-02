@@ -1,5 +1,5 @@
 <template>
-  <match-history v-model="settings" v-model:shots="shots" :can="match.author_id === userId" :users="users" />
+  <match-settings v-model="settings" v-model:shots="shots" :can="match.author_id === userId" :users="users" />
 
   <div h-full flex flex-col>
     <n-progress border-radius="0" type="line" :status="percent === 100 ? 'success' : undefined" :percentage="percent" indicator-placement="inside" />
@@ -23,10 +23,15 @@
             </template>
             {{ isActive ? 'Disabilita': 'Abilita' }} Wake Lock
           </n-tooltip>
-          <!--<n-dropdown :options="options" placement="bottom-start">-->
+
+          <n-button text circle @click="toggle()">
+            <centered-icon v-if="isFullscreen" text-xl i-mdi-fullscreen-exit />
+            <centered-icon v-else text-xl i-mdi-fullscreen />
+          </n-button>
+
           <n-button text @click="settings = !settings">
             <template #icon>
-              <centered-icon i-ph-monitor-play text-xl />
+              <centered-icon i-ph-gear-fill text-xl />
             </template>
           </n-button>
         </div>
@@ -46,7 +51,8 @@
 
     <userboard :shots="shots" :users="users" />
 
-    <keyboard :disable="!IAmPlaying || percent === 100" />
+    <numeric-keyboard v-if="match.keyboard === 'numeric'" :disable="!IAmPlaying || percent === 100" />
+    <casual-keyboard v-else :disable="!IAmPlaying || percent === 100" />
   </div>
 </template>
 
@@ -55,10 +61,11 @@ import type { RealtimeSubscription } from '@supabase/supabase-js'
 import sium from '/sium.mp3'
 import he_sium from '/he_sium.mp3'
 import { useSound } from '@vueuse/sound'
-import { handleLoading, result, results, supabase, toggleLoading, userId } from '~/composables'
+import { handleLoading, picked, result, results, shaked, supabase, toggleLoading, userId } from '~/composables'
 import type { Choise, Match, Profile, Shot } from '~/types'
 
 const message = useMessage()
+const { toggle, isFullscreen } = useFullscreen()
 
 onBeforeUnmount(() => { result.value = [] })
 
@@ -95,6 +102,7 @@ async function addMissingPlayer (player_id: string) {
 async function loadPlayers () {
   const { data } = await supabase.from('match_player')
     .select('score,user:profiles(user_id,avatar_url,full_name)')
+    // .select('score,user_id')
     .eq('match_id', props.id)
 
   if (data) {
@@ -167,6 +175,12 @@ async function accept (choise: Choise) {
     if (!error) {
       // if (currentUser.value === props.users.length - 1) currentUser.value = 0
       // else currentUser.value++
+
+      if (match.value.keyboard === 'casual') {
+        picked.value = []
+        shaked.value = 0
+      }
+
       result.value = []
     }
   })

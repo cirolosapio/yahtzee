@@ -22,7 +22,6 @@ export const useUsersStore = defineStore('users', {
     async init () {
       toggleLoading()
       const { data } = await supabase.from<Profile>('profiles').select('user_id,full_name,email,online')
-      console.log('--- ~ init ~ data', data)
       if (data) this.users = data
       this.subscribe()
       toggleLoading()
