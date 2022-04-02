@@ -1,10 +1,18 @@
 <template>
   <n-drawer :show="modelValue" width="90%" @update-show="v => $emit('update:modelValue', v)">
     <n-drawer-content closable>
+      <!--
+        <template #header>
+        <div flex space-x-2 items-center>
+        <div i-ph-gear-duotone />
+        <div>Impostazioni</div>
+        </div>
+        </template>
+      -->
       <template #header>
         <div flex space-x-2 items-center>
-          <div i-ph-gear-duotone />
-          <div>Impostazioni</div>
+          <div i-ph-monitor-play />
+          <div>Storico</div>
         </div>
       </template>
 
@@ -22,14 +30,16 @@
         <n-divider />
       -->
 
-      <n-page-header>
+      <!--
+        <n-page-header>
         <template #title>
-          <div flex space-x-2 items-center>
-            <div i-ph-monitor-play />
-            <div>Storico</div>
-          </div>
+        <div flex space-x-2 items-center>
+        <div i-ph-monitor-play />
+        <div>Storico</div>
+        </div>
         </template>
-      </n-page-header>
+        </n-page-header>
+      -->
       <n-list v-if="shots.length>0">
         <n-list-item v-for="(shot, idx) in shots" :key="shot.id">
           <div flex space-x-2 items-center>

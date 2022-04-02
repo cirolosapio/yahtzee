@@ -67,21 +67,18 @@
 
 <script setup lang="ts">
 import type { Choise } from '~/types'
-import { icons, models, results } from '~/composables'
+import { icons, model, results } from '~/composables'
 
 defineEmits<{ (e: 'accept', choise: Choise): void }>()
 
-const props = defineProps<{
-  matchId: string
-  chosed: Choise[]
-}>()
+const props = defineProps<{ chosed: Choise[] }>()
 
 const z = (n: number) => n === 0 ? undefined : n
 
 const klass = computed(() => (choise: Choise) => ({
   [icons[choise]]: true,
-  'text-green-700': props.chosed.length < 13 && props.chosed.includes(choise) && models.value[props.matchId].length < 5,
-  'text-green': props.chosed.length < 13 && props.chosed.includes(choise) && models.value[props.matchId].length === 5,
-  'text-gray-400': props.chosed.length < 13 && !props.chosed.includes(choise) && models.value[props.matchId].length < 5,
+  'text-green-700': props.chosed.length < 13 && props.chosed.includes(choise) && model.value.length < 5,
+  'text-green': props.chosed.length < 13 && props.chosed.includes(choise) && model.value.length === 5,
+  'text-gray-400': props.chosed.length < 13 && !props.chosed.includes(choise) && model.value.length < 5,
 }))
 </script>

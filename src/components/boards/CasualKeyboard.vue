@@ -2,7 +2,7 @@
   <div m2>
     <n-button-group flex>
       <div grid grid-cols-5 w-full>
-        <n-button v-for="(n, idx) in models[matchId]" :key="`res-${idx}`" type="primary" v-bind="isPicked(idx)" :disabled="disable" @click="toggle(idx)">
+        <n-button v-for="(n, idx) in model" :key="`res-${idx}`" type="primary" v-bind="isPicked(idx)" :disabled="disable" @click="toggle(idx)">
           <!--
             <n-number-animation
             ref="numberAnimationInstRef"
@@ -20,8 +20,8 @@
     <div mt2>
       <n-button :disabled="disable || shotComplete" block type="primary" secondary @click="shake()">
         LANCIA
-        <template v-if="[1, 2].includes(shakeds[matchId])">
-          {{ shakeds[matchId] }}/3
+        <template v-if="[1, 2].includes(shaked)">
+          {{ shaked }}/3
         </template>
       </n-button>
     </div>
@@ -29,30 +29,27 @@
 </template>
 
 <script setup lang="ts">
-import { models, pickeds, shakeds } from '~/composables'
+import { model, picked, shaked } from '~/composables'
 import type { Face } from '~/types'
 
-const props = defineProps<{
-  matchId: string
-  disable: boolean
-}>()
+defineProps<{ disable: boolean }>()
 
-const shotComplete = computed(() => shakeds.value[props.matchId] === 3)
+const shotComplete = computed(() => shaked.value === 3)
 
-const isPicked = computed(() => (n: number) => ({ [pickeds.value[props.matchId].includes(n) ? 'primary' : 'quaternary']: true }))
+const isPicked = computed(() => (n: number) => ({ [picked.value.includes(n) ? 'primary' : 'quaternary']: true }))
 
 function toggle (idx: number) {
   if (shotComplete.value) return
-  pickeds.value[props.matchId] = pickeds.value[props.matchId].includes(idx)
-    ? pickeds.value[props.matchId].filter(n => n !== idx)
-    : [...pickeds.value[props.matchId], idx]
+  picked.value = picked.value.includes(idx)
+    ? picked.value.filter(n => n !== idx)
+    : [...picked.value, idx]
 }
 
 function shake () {
-  for (let i = 0; i < 5; i++) if (!pickeds.value[props.matchId].includes(i)) models.value[props.matchId][i] = Math.floor(6 * Math.random()) + 1 as Face
-  if (shakeds.value[props.matchId]) shakeds.value[props.matchId]++
-  else shakeds.value[props.matchId] = 1
+  for (let i = 0; i < 5; i++) if (!picked.value.includes(i)) model.value[i] = Math.floor(6 * Math.random()) + 1 as Face
+  if (shaked.value) shaked.value++
+  else shaked.value = 1
 
-  if (shotComplete) pickeds.value[props.matchId] = []
+  if (shotComplete) picked.value = []
 }
 </script>

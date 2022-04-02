@@ -11,6 +11,7 @@
       <li line-through>Inserire audio Ronaldo quando si verifica Sium e non</li>
       <li line-through>Lancio Casuale</li>
       <li>Gestione turni</li>
+      <li>Doppio Sium</li>
       <li>Richiedi una funzionalità</li>
       <li>Segnala un problema</li>
       <li>Invita a giocare</li>

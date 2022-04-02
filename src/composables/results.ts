@@ -1,14 +1,28 @@
 import type { Result } from '~/types'
 
-export const models = useStorage<Record<string, Result>>('models', {})
-export const shakeds = useStorage<Record<string, number>>('shakeds', {})
-export const pickeds = useStorage<Record<string, number[]>>('pickeds', {})
-export const currentModel = useStorage<string>('currentModel', null)
+const models = useStorage<Record<string, Result>>('models', {})
+const pickeds = useStorage<Record<string, number[]>>('pickeds', {})
+const shakeds = useStorage<Record<string, number>>('shakeds', {})
 
-const sum = computed(() => models.value[currentModel.value].reduce((t, val) => t + val, 0))
-const sorted = computed(() => [...new Set(models.value[currentModel.value])].sort((a, b) => a - b).join(''))
+export const current = useStorage<string>('current', null)
+
+export const model = computed({
+  get: () => models.value[current.value],
+  set: value => { models.value[current.value] = value },
+})
+export const picked = computed({
+  get: () => pickeds.value[current.value],
+  set: value => { pickeds.value[current.value] = value },
+})
+export const shaked = computed({
+  get: () => shakeds.value[current.value],
+  set: value => { shakeds.value[current.value] = value },
+})
+
+const sum = computed(() => model.value.reduce((t, val) => t + val, 0))
+const sorted = computed(() => [...new Set(model.value)].sort((a, b) => a - b).join(''))
 const counters = computed(() =>
-  models.value[currentModel.value].reduce((res, face) => {
+  model.value.reduce((res, face) => {
     res[face - 1]++
     return res
   }, Array.from({ length: 6 }, () => 0)),
@@ -27,7 +41,7 @@ export const results = computed(() => ({
   full: (counters.value.includes(3) && counters.value.includes(2)) ? 25 : 0,
   smallStair: ['1234', '12345', '12346', '2345', '23456', '3456'].includes(sorted.value) ? 30 : 0,
   bigStair: ['12345', '23456'].includes(sorted.value) ? 40 : 0,
-  sium: (models.value[currentModel.value].length === 5 && counters.value.filter(v => v === 0).length === 5) ? 50 : 0,
+  sium: (model.value.length === 5 && counters.value.filter(v => v === 0).length === 5) ? 50 : 0,
   sum: sum.value,
 }))
 

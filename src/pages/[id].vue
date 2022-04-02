@@ -31,7 +31,8 @@
 
           <n-button text @click="settings = !settings">
             <template #icon>
-              <centered-icon i-ph-gear-fill text-xl />
+              <!--<centered-icon i-ph-gear-fill text-xl />-->
+              <centered-icon i-ph-monitor-play text-xl />
             </template>
           </n-button>
         </div>
@@ -40,7 +41,7 @@
 
     <div flex-1 m2>
       <!--shots: {{ shots }}<br />-->
-      <leaderboard :match-id="id" :chosed="chosed" :shots="shots" @accept="choise => accept(choise)" />
+      <leaderboard :chosed="chosed" :shots="shots" @accept="choise => accept(choise)" />
     </div>
 
     <!--
@@ -51,8 +52,8 @@
 
     <userboard :shots="shots" :users="users" />
 
-    <numeric-keyboard v-if="match.keyboard === 'numeric'" :match-id="id" :disable="!IAmPlaying || percent === 100" />
-    <casual-keyboard v-else :match-id="id" :disable="!IAmPlaying || percent === 100" />
+    <numeric-keyboard v-if="match.keyboard === 'numeric'" :disable="!IAmPlaying || percent === 100" />
+    <casual-keyboard v-else :disable="!IAmPlaying || percent === 100" />
   </div>
 </template>
 
@@ -61,7 +62,7 @@ import type { RealtimeSubscription } from '@supabase/supabase-js'
 import sium from '/sium.mp3'
 import he_sium from '/he_sium.mp3'
 import { useSound } from '@vueuse/sound'
-import { currentModel, handleLoading, models, pickeds, results, shakeds, supabase, toggleLoading, userId } from '~/composables'
+import { current, handleLoading, model, picked, results, shaked, supabase, toggleLoading, userId } from '~/composables'
 import type { Choise, Match, Profile, Shot } from '~/types'
 
 const message = useMessage()
@@ -72,16 +73,16 @@ let newResultSubscription: RealtimeSubscription
 onUnmounted(async () => {
   newUserSubscription && await supabase.removeSubscription(newUserSubscription)
   newResultSubscription && await supabase.removeSubscription(newResultSubscription)
-  currentModel.value = null
+  current.value = null
 })
 
 const props = defineProps<{ id: string }>()
 
 onBeforeMount(() => {
-  if (!models.value[props.id]) models.value[props.id] = []
-  if (!pickeds.value[props.id]) pickeds.value[props.id] = []
-  if (!shakeds.value[props.id]) shakeds.value[props.id] = 0
-  currentModel.value = props.id
+  current.value = props.id
+  if (!model.value) model.value = []
+  if (!picked.value) picked.value = []
+  if (!shaked.value) shaked.value = 0
 })
 
 const siumSound = useSound(sium)
@@ -166,7 +167,7 @@ async function loadMatch () {
 }
 
 async function accept (choise: Choise) {
-  if (models.value[props.id].length !== 5) return
+  if (model.value.length !== 5) return
   if (chosed.value.includes(choise)) return
   await handleLoading(async () => {
     if (import.meta.env.PROD && choise === 'sium') results.value[choise] === 50 ? siumSound.play() : heSiumSound.play()
@@ -174,7 +175,7 @@ async function accept (choise: Choise) {
       .insert({
         match_id: props.id,
         user_id: supabase.auth.user()?.id, // props.users[currentUser.value]
-        result: models.value[props.id],
+        result: model.value,
         value: results.value[choise],
         choise,
       })
@@ -182,9 +183,8 @@ async function accept (choise: Choise) {
       // if (currentUser.value === props.users.length - 1) currentUser.value = 0
       // else currentUser.value++
 
-      if (match.value.keyboard === 'casual') shakeds.value[props.id] = 0
-
-      models.value[props.id] = []
+      if (match.value.keyboard === 'casual') shaked.value = 0
+      model.value = []
     }
   })
 }
