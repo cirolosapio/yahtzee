@@ -1,6 +1,6 @@
 import type { RealtimeSubscription } from '@supabase/supabase-js'
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { supabase, toggleLoading } from '~/composables'
+import { supabase, toggleLoading, userId } from '~/composables'
 import type { Profile } from '~/types'
 
 interface State {
@@ -16,6 +16,7 @@ export const useUsersStore = defineStore('users', {
 
   getters: {
     onlineUsersCount: state => state.users.reduce((tot, { online }) => tot + (online ? 1 : 0), 0),
+    userLabel: state => state.users.find(u => u.user_id === userId.value)?.full_name,
   },
 
   actions: {

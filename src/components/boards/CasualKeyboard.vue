@@ -50,6 +50,6 @@ function shake () {
   if (shaked.value) shaked.value++
   else shaked.value = 1
 
-  if (shotComplete) picked.value = []
+  if (shotComplete.value) picked.value = []
 }
 </script>

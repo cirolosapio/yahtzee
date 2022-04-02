@@ -7,7 +7,6 @@ declare module 'vue' {
     AzureIcon: typeof import('./src/components/icons/providers/AzureIcon.vue')['default']
     CasualKeyboard: typeof import('./src/components/boards/CasualKeyboard.vue')['default']
     CenteredIcon: typeof import('./src/components/icons/CenteredIcon.vue')['default']
-    DiceKeyboard: typeof import('./src/components/boards/DiceKeyboard.vue')['default']
     DiscordIcon: typeof import('./src/components/icons/providers/DiscordIcon.vue')['default']
     EmailIcon: typeof import('./src/components/icons/providers/EmailIcon.vue')['default']
     FacebookIcon: typeof import('./src/components/icons/providers/FacebookIcon.vue')['default']

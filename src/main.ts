@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createPinia } from 'pinia'
 import routes from 'virtual:generated-pages'
+import * as Sentry from '@sentry/vue'
 import App from './App.vue'
 import { supabase, userId } from '~/composables'
 import { useUsersStore } from '~/stores'
@@ -26,12 +27,32 @@ router.beforeEach(async (to, _, next) => {
   else next()
 })
 
-createApp(App)
+const app = createApp(App)
   .use(router)
   .use(createPinia())
-  .mount('#app')
 
 const usersStore = useUsersStore()
+
+Sentry.init({
+  app,
+  dsn: import.meta.env.VITE_SENTRY_DSN,
+  trackComponents: true,
+  beforeSend (event) {
+    // event.tags = event.tags || {}
+
+    if (userId.value) {
+      event.user = {
+        id: userId.value,
+        username: usersStore.userLabel,
+      }
+    }
+
+    return event
+  },
+})
+
+app.mount('#app')
+
 usersStore.init().then(() => {
   watch(
     useDocumentVisibility(),

@@ -3,6 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@crewbe/eslint-config-vue-ts': ^0.0.18
   '@iconify/json': ^2.1.23
+  '@sentry/vue': ^6.19.3
   '@supabase/supabase-js': ^1.33.2
   '@types/node': ^16.11.26
   '@unocss/reset': ^0.30.8
@@ -28,6 +29,7 @@ specifiers:
   vue-tsc: ^0.33.9
 
 dependencies:
+  '@sentry/vue': 6.19.3_vue@3.2.31
   '@supabase/supabase-js': 1.33.2
   '@vueuse/core': 8.2.3_vue@3.2.31
   '@vueuse/sound': 1.1.7_vue@3.2.31
@@ -1474,6 +1476,73 @@ packages:
       estree-walker: 2.0.2
       picomatch: 2.3.0
     dev: true
+
+  /@sentry/browser/6.19.3:
+    resolution: {integrity: sha512-E8UA6IN8z9hL6aGzOHUzqgNZiBwARkA89i8ncKB9QU1/+jl7598ZLziN4+uyPeZiRquEz8Ub7Ve1eacs1u+fbw==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@sentry/core': 6.19.3
+      '@sentry/types': 6.19.3
+      '@sentry/utils': 6.19.3
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/core/6.19.3:
+    resolution: {integrity: sha512-RcGmYdkrE3VYBMl9Hgv4GKsC8FEVUdWYsfGIcT/btwP2YpBeUaTZl+1vV9r3Ncdl125LqzP5CKSj5otVxiEg6g==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@sentry/hub': 6.19.3
+      '@sentry/minimal': 6.19.3
+      '@sentry/types': 6.19.3
+      '@sentry/utils': 6.19.3
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/hub/6.19.3:
+    resolution: {integrity: sha512-iYbkrxEZt6CrHP3U3r54MARVZSs3YHjAMUMOTlC16s/Amz1McwV95XtI3NJaqMhwzl7R5vbGrs3xOtLg1V1Uyw==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@sentry/types': 6.19.3
+      '@sentry/utils': 6.19.3
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/minimal/6.19.3:
+    resolution: {integrity: sha512-xy/6ThHK8B2NJT98nWrx6V9eVgUbzq2N/8lv5/QqrKsICjxx22TRC8Q6zPg/o7BYcrY5vpugSEbIeErTnyxHDA==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@sentry/hub': 6.19.3
+      '@sentry/types': 6.19.3
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/types/6.19.3:
+    resolution: {integrity: sha512-jHhqxp8MIWSfOc3krorirTGKTEaSFO6XrAvi+2AZhr6gvOChwOgzgrN2ZqesJcZmgCsqWV21u3usSwYeRrjOJA==}
+    engines: {node: '>=6'}
+    dev: false
+
+  /@sentry/utils/6.19.3:
+    resolution: {integrity: sha512-GdC9B/FK7qd0zItY43135bYbhuVSawE18bIrQDNuno8gTpDJ5OgShpTN9zR53AmMh16/lwKNnV3ZZjlpKcxuNw==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@sentry/types': 6.19.3
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/vue/6.19.3_vue@3.2.31:
+    resolution: {integrity: sha512-LoR+yAumfP1YRZr8erZsARnhMF/lvyTFuWBK7fiBEBHpGkn8AgpQ29lU8ZhZ4ZMrCOkHSC7rSfUlz71hhbm0AQ==}
+    engines: {node: '>=6'}
+    peerDependencies:
+      vue: 2.x || 3.x
+    dependencies:
+      '@sentry/browser': 6.19.3
+      '@sentry/core': 6.19.3
+      '@sentry/minimal': 6.19.3
+      '@sentry/types': 6.19.3
+      '@sentry/utils': 6.19.3
+      tslib: 1.14.1
+      vue: 3.2.31
+    dev: false
 
   /@supabase/functions-js/1.3.2:
     resolution: {integrity: sha512-97b2pdrCW4C4khFjotPRlXXs+oPmlbNZbMuR76nGyuNVSbNZ8tsIMYbfUdi4m61vqSUkRk+vieKaeNHMDsPN2A==}
@@ -5218,7 +5287,6 @@ packages:
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
-    dev: true
 
   /tsutils/3.21.0_typescript@4.6.3:
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
