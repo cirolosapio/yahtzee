@@ -20,6 +20,9 @@
     <div mt2>
       <n-button :disabled="disable || shaked === 3" block type="primary" secondary @click="shake()">
         LANCIA
+        <template v-if="[1, 2].includes(shaked)">
+          {{ shaked }}/3
+        </template>
       </n-button>
     </div>
   </div>

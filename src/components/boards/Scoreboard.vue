@@ -39,9 +39,11 @@
       </tr>
       <tr>
         <td colspan="2">
-          {{ left }}
-          <template v-if="bonus">+ {{ bonus }}</template>
-          + {{ total -bonus -left }}
+          <template v-if="total - bonus - left > 0">
+            {{ left }}
+            <template v-if="bonus">+ {{ bonus }}</template>
+            + {{ total - bonus - left }}
+          </template>
         </td>
         <th text-2xl><centered-icon i-ph-question-fill /></th>
         <td>{{ score.sum }}</td>
