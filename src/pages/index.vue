@@ -15,16 +15,19 @@
 </template>
 
 <script setup lang="ts">
+import type { RealtimeSubscription } from '@supabase/supabase-js'
 import { destroy, isLoading, supabase, toggleLoading, userId } from '~/composables'
-import type { KeyboardType, Match } from '~/types'
+import type { KeyboardType, Match, Profile } from '~/types'
 
 const $router = useRouter()
 const dialog = useDialog()
 
+let matchesSub: RealtimeSubscription
 const matches = ref<Match[]>([])
 
 onMounted(async () => {
   toggleLoading()
+
   const { data } = await supabase.from('matches')
     .select('*,players:match_player(user:profiles(full_name,avatar_url))')
     .order('created_at', { ascending: false })
@@ -33,16 +36,28 @@ onMounted(async () => {
     for (const { players, ...rest } of data) {
       matches.value.push({
         ...rest,
-        players: players.map(({ user }) => ({
-          full_name: user.full_name,
-          src: user.avatar_url,
-        })),
+        players: players.map(({ user }: { user: Profile }) => ({ src: user.avatar_url })),
       })
     }
   }
 
+  matchesSub = supabase.from('matches')
+    .on('INSERT', async payload => {
+      // const { data } = await supabase.from<{ match_id: number; user: Profile }>('match_player')
+      //   .select('user:profiles(full_name,avatar_url)')
+      //   .eq('match_id', payload.new.id)
+      matches.value.unshift({
+        ...payload.new,
+        // players: data?.map(({ user: { avatar_url } }) => ({ src: avatar_url })),
+      })
+    })
+    .on('DELETE', payload => { matches.value = matches.value.filter(match => match.id !== payload.old.id) })
+    .subscribe()
+
   toggleLoading()
 })
+
+onUnmounted(async () => { matchesSub && await supabase.removeSubscription(matchesSub) })
 
 async function destroyMatch (match_id: number, idx: number) {
   toggleLoading()
