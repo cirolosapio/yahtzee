@@ -10,6 +10,8 @@
       <li line-through>Gestione lobby</li>
       <li line-through>Inserire audio Ronaldo quando si verifica Sium e non</li>
       <li line-through>Lancio Casuale</li>
+      <li line-through>Realtime su lista match</li>
+      <li line-through>Suono al lancio dei dadi</li>
       <li>Gestione turni</li>
       <li>Doppio Sium</li>
       <li>Richiedi una funzionalità</li>
