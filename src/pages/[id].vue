@@ -169,8 +169,10 @@ async function loadMatch () {
 async function accept (choise: Choise) {
   if (model.value.length !== 5) return
   if (chosed.value.includes(choise)) return
+
   await handleLoading(async () => {
     if (import.meta.env.PROD && choise === 'sium') results.value[choise] === 50 ? siumSound.play() : heSiumSound.play()
+
     const { error } = await supabase.from('match_player_shot')
       .insert({
         match_id: props.id,
@@ -179,6 +181,7 @@ async function accept (choise: Choise) {
         value: results.value[choise],
         choise,
       })
+
     if (!error) {
       // if (currentUser.value === props.users.length - 1) currentUser.value = 0
       // else currentUser.value++

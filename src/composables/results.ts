@@ -41,7 +41,7 @@ export const results = computed(() => ({
   full: (counters.value.includes(3) && counters.value.includes(2)) ? 25 : 0,
   smallStair: ['1234', '12345', '12346', '2345', '23456', '3456'].includes(sorted.value) ? 30 : 0,
   bigStair: ['12345', '23456'].includes(sorted.value) ? 40 : 0,
-  sium: (model.value.length === 5 && counters.value.filter(v => v === 0).length === 5) ? 50 : 0,
+  sium: (model.value.length === 5 && sorted.value.length === 1) ? 50 : 0,
   sum: sum.value,
 }))
 
