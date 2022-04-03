@@ -183,7 +183,10 @@ async function accept (choise: Choise) {
       // if (currentUser.value === props.users.length - 1) currentUser.value = 0
       // else currentUser.value++
 
-      if (match.value.keyboard === 'casual') shaked.value = 0
+      if (match.value.keyboard === 'casual') {
+        shaked.value = 0
+        picked.value = []
+      }
       model.value = []
     }
   })
