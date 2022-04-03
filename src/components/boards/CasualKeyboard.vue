@@ -29,13 +29,16 @@
 </template>
 
 <script setup lang="ts">
+import { useSound } from '@vueuse/sound'
 import { model, picked, shaked } from '~/composables'
 import type { Face } from '~/types'
+import diceRoll from '/dice_roll.mp3'
 
 defineProps<{ disable: boolean }>()
 
-const shotComplete = computed(() => shaked.value === 3)
+const diceRollSound = useSound(diceRoll)
 
+const shotComplete = computed(() => shaked.value === 3)
 const isPicked = computed(() => (n: number) => ({ [picked.value.includes(n) ? 'primary' : 'quaternary']: true }))
 
 function toggle (idx: number) {
@@ -51,5 +54,7 @@ function shake () {
   else shaked.value = 1
 
   if (shotComplete.value) picked.value = []
+
+  diceRollSound.play()
 }
 </script>

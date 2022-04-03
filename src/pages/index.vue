@@ -77,8 +77,8 @@ async function createNewMatch () {
     content: 'Come vuoi che siano gestiti i lanci?',
     negativeText: 'Dadi',
     positiveText: 'Tastiera',
-    positiveButtonProps: { quaternary: true },
-    negativeButtonProps: { quaternary: true },
+    positiveButtonProps: { quaternary: true, text: true },
+    negativeButtonProps: { quaternary: true, text: true },
     onPositiveClick: async () => { await storeMatch('numeric') },
     onNegativeClick: async () => { await storeMatch('casual') },
   })
