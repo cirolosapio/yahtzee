@@ -20,7 +20,7 @@
 
         <template #suffix>
           <div flex flex-col justify-center>
-            <n-button v-if="match.author_id === userId" text @click.stop="$emit('destroy', match.id, idx)">
+            <n-button v-if="itsMe || match.author_id === userId" text @click.stop="$emit('destroy', match.id, idx)">
               <template #icon>
                 <centered-icon i-carbon-close text-xl />
               </template>
@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { userId } from '~/composables'
+import { itsMe, userId } from '~/composables'
 import type { Match } from '~/types'
 
 defineEmits<{ (e: 'destroy', match_id: number, idx: number): void }>()
